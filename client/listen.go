@@ -1,11 +1,11 @@
 package client
 
 import (
-	"github.com/akula410/web/server"
 	"context"
 	"flag"
-	"google.golang.org/grpc"
 	"fmt"
+	"github.com/akula410/web/server"
+	"google.golang.org/grpc"
 )
 
 func Listen(){
@@ -22,7 +22,7 @@ func Listen(){
 			panic(err)
 		}
 
-		connProto = proto.NewApiClient(conn)
+		connProto = server.NewApiClient(conn)
 
 		r, err = connProto.Add(context.Background(), &server.Request{Command: flag.Arg(0)})
 
