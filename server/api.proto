@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package proto;
+
+service Api {
+    rpc Add(Request) returns (Response) {}
+}
+
+message Request {
+    string command = 1;
+    string cmd = 2;
+}
+
+message Response {
+    bool result = 1;
+    repeated string message = 2;
+}
