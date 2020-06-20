@@ -8,14 +8,16 @@ import (
 
 func main() {
 	var srv = &server.Server{Network:"tcp", Address:":8081"}
+
 	srv.
-		HandleFunc(":8080", "/", func (w http.ResponseWriter, r *http.Request) {
-			_, err := fmt.Fprint(w, "Hello World")
-			if err != nil {
-				panic(err)
-			}
-		}).
-		Start()
+	Static("static/", "/public/").
+	HandleFunc(":8080", "/", func (w http.ResponseWriter, r *http.Request) {
+		_, err := fmt.Fprint(w, "Hello World")
+		if err != nil {
+			panic(err)
+		}
+	}).
+	Start()
 
 	srv.Block()
 }

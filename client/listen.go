@@ -27,7 +27,7 @@ func Listen(){
 		r, err = connProto.Add(context.Background(), &server.Request{Command: flag.Arg(0)})
 
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 
 		if r.Message != nil {
