@@ -25,6 +25,9 @@ type Server struct {
 	done chan struct{}
 
 	end chan bool
+
+	staticPath string
+	staticNamespace string
 }
 
 var start = "start"
@@ -116,6 +119,9 @@ func (s *Server) Start(){
 		s.setMessage("Proto server start....")
 	}
 
+	if len(s.staticPath) > 0 && len(s.staticNamespace) > 0{
+		http.Handle(s.staticNamespace, http.StripPrefix(s.staticNamespace, http.FileServer(http.Dir(s.staticPath))))
+	}
 	http.HandleFunc(s.webPattern, s.webHandleFunc)
 	s.startWeb()
 }
@@ -179,6 +185,12 @@ func (s *Server) getMessage()[]string{
 
 func (s *Server) Block(){
 	<-s.done
+}
+
+func (s *Server) Static(path string, namespace string) *Server{
+	s.staticPath = path
+	s.staticNamespace = namespace
+	return s
 }
 
 
